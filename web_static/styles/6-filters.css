@@ -1,0 +1,79 @@
+.filters {
+    background-color: #fff;
+    height: 70px;
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+}
+.filters button {
+    font-size: 20px; /* Adjusted font size */
+    background-color: #FF5A5F;
+    color: #fff;
+    height: 48px;
+    width: 20%;
+    border: 0;
+    float: right;
+    border-radius: 4px;
+    margin: 11px 30px;
+    margin-left: auto;
+}
+
+.locations, .amenities {
+    height: 100%;
+    width: 25%;
+}
+.locations {
+    border-right: 1px solid #DDDDDD;
+}
+
+.locations h3, .amenities h3 {
+    font-weight: 600;
+    font-size: 18px; /* Adjusted font size */
+    color: #333333; /* Adjusted color */
+    text-align: left;
+    padding-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+.locations h4, .amenities h4 {
+    font-weight: 400;
+    font-size: 16px; /* Adjusted font size */
+    color: #666666; /* Adjusted color */
+    padding-left: 50px;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.popover {
+    visibility: hidden;
+    background-color: #FAFAFA;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.popover h2 {
+    font-size: 18px; /* Adjusted font size */
+    color: #444444; /* Adjusted color */
+}
+
+.popover li {
+    list-style-type: none;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 16px; /* Adjusted font size */
+    color: #555555; /* Adjusted color */
+}
+
+.locations:hover .popover,
+.amenities:hover .popover {
+    visibility: visible;
+}
+
+.filters button:hover {
+    opacity: 0.9;
+}
+
