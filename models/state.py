@@ -1,14 +1,9 @@
 #!/usr/bin/python3
+"""Di Module for State class."""
+
 from models.base_model import BaseModel
-"""
-our Module class is-: State
-"""
 
 
 class State(BaseModel):
-    """our definition for Dis class State"""
+    """Dis Class representing a State."""
     name = ""
-
-    def __init__(self, *args, **kwargs):
-        """ usin the constructor method """
-        super().__init__(self, *args, **kwargs)

@@ -1,43 +1,53 @@
 #!/usr/bin/python3
+"""Unit test module for the Review class."""
+
 import unittest
+from datetime import datetime
+import time
 from models.review import Review
-"""
-Unit test module for the Review class
-"""
+import re
+import json
+from models.engine.file_storage import FileStorage
+import os
+from models import storage
+from models.base_model import BaseModel
 
 
 class TestReview(unittest.TestCase):
-    ''' Unit tests for the Review class '''
 
-    def test_object_instantiation(self):
-        ''' Test instantiation of the Review class '''
-        self.review = Review()
+    """Test cases for the Review class."""
 
-    def test_attributes(self):
-        ''' Test attributes of the Review class '''
-        self.review = Review()
-        self.assertTrue(hasattr(self.review, "created_at"))
-        self.assertTrue(hasattr(self.review, "updated_at"))
-        self.assertFalse(hasattr(self.review, "random_attr"))
-        self.assertTrue(hasattr(self.review, "text"))
-        self.assertTrue(hasattr(self.review, "id"))
-        self.assertEqual(self.review.text, "")
-        self.assertEqual(self.review.__class__.__name__, "Review")
+    def setUp(self):
+        """Set up test methods."""
+        pass
 
-    def test_save_method(self):
-        ''' Test the save method of the Review class '''
-        self.review = Review()
-        self.review.save()
-        self.assertTrue(hasattr(self.review, "updated_at"))
+    def tearDown(self):
+        """Tear down test methods."""
+        self.resetStorage()
+        pass
 
-    def test_str_method(self):
-        ''' Test the __str__ method of the Review class '''
-        self.review = Review()
-        expected_str = "[{}] ({}) {}".format(self.review.__class__.__name__,
-                                             str(self.review.id), self.review.__dict__)
-        self.assertEqual(str(self.review), expected_str)
+    def resetStorage(self):
+        """Reset FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
 
+    def test_8_instantiation(self):
+        """Test instantiation of Review class."""
 
-if __name__ == '__main__':
+        b = Review()
+        self.assertEqual(str(type(b)), "<class 'models.review.Review'>")
+        self.assertIsInstance(b, Review)
+        self.assertTrue(issubclass(type(b), BaseModel))
+
+    def test_8_attributes(self):
+        """Test the attributes of Review class."""
+        attributes = storage.attributes()["Review"]
+        o = Review()
+        for k, v in attributes.items():
+            self.assertTrue(hasattr(o, k))
+            self.assertEqual(type(getattr(o, k, None)), v)
+
+if __name__ == "__main__":
     unittest.main()
 

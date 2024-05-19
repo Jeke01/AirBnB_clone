@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-"""
-this module wil  executes wen models package is imported
-"""
-
+"""Dis is the Module for FileStorage autoinit."""
 
 from models.engine.file_storage import FileStorage
 storage = FileStorage()

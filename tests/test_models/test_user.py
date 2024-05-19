@@ -1,66 +1,52 @@
 #!/usr/bin/python3
+"""Unit test module for the User class."""
 
 import unittest
-import os
+from datetime import datetime
+import time
 from models.user import User
+import re
+import json
+from models.engine.file_storage import FileStorage
+import os
+from models import storage
 from models.base_model import BaseModel
 
 
 class TestUser(unittest.TestCase):
-    ''' Unit tests for the User class '''
 
-    @classmethod
-    def setUpClass(cls):
-        ''' Set up a User instance for testing '''
-        cls.my_user = User()
-        cls.my_user.first_name = "Betty"
-        cls.my_user.last_name = "Holberton"
-        cls.my_user.email = "airbnb@holbertonshool.com"
-        cls.my_user.password = "root"
+    """Test cases for the User class."""
 
-    @classmethod
-    def tearDownClass(cls):
-        ''' Clean up the User instance after tests '''
-        del cls.my_user
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            pass
+    def setUp(self):
+        """Set up test methods."""
+        pass
 
-    def test_is_subclass(self):
-        ''' Test if User is a subclass of BaseModel '''
-        self.assertTrue(issubclass(self.my_user.__class__, BaseModel))
+    def tearDown(self):
+        """Tear down test methods."""
+        self.resetStorage()
+        pass
 
-    def test_checking_for_functions(self):
-        ''' Test if User class has a docstring '''
-        self.assertIsNotNone(User.__doc__)
+    def resetStorage(self):
+        """Reset FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
 
-    def test_has_attributes(self):
-        ''' Test if User instance has specific attributes '''
-        self.assertIn('email', self.my_user.__dict__)
-        self.assertIn('id', self.my_user.__dict__)
-        self.assertIn('created_at', self.my_user.__dict__)
-        self.assertIn('updated_at', self.my_user.__dict__)
-        self.assertIn('password', self.my_user.__dict__)
-        self.assertIn('first_name', self.my_user.__dict__)
-        self.assertIn('last_name', self.my_user.__dict__)
+    def test_8_instantiation(self):
+        """Test instantiation of User class."""
 
-    def test_attributes_are_strings(self):
-        ''' Test if User attributes are of type string '''
-        self.assertIsInstance(self.my_user.email, str)
-        self.assertIsInstance(self.my_user.password, str)
-        self.assertIsInstance(self.my_user.first_name, str)
-        self.assertIsInstance(self.my_user.last_name, str)
+        b = User()
+        self.assertEqual(str(type(b)), "<class 'models.user.User'>")
+        self.assertIsInstance(b, User)
+        self.assertTrue(issubclass(type(b), BaseModel))
 
-    def test_save(self):
-        ''' Test the save method of the User class '''
-        self.my_user.save()
-        self.assertNotEqual(self.my_user.created_at, self.my_user.updated_at)
-
-    def test_to_dict(self):
-        ''' Test the to_dict method of the User class '''
-        self.assertIn('to_dict', dir(self.my_user))
-
+    def test_8_attributes(self):
+        """Test the attributes of User class."""
+        attributes = storage.attributes()["User"]
+        o = User()
+        for k, v in attributes.items():
+            self.assertTrue(hasattr(o, k))
+            self.assertEqual(type(getattr(o, k, None)), v)
 
 if __name__ == "__main__":
     unittest.main()

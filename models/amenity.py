@@ -1,14 +1,9 @@
 #!/usr/bin/python3
+"""Dis is the Module for Amenity class."""
+
 from models.base_model import BaseModel
-"""
-Dis Module is the  class: Amenity
-"""
 
 
 class Amenity(BaseModel):
-    """our definition for Dis class Amenity"""
+    """Dis Class representing a Amenity."""
     name = ""
-
-    def __init__(self, *args, **kwargs):
-        """ we will use the constructor method """
-        super().__init__(self, *args, **kwargs)

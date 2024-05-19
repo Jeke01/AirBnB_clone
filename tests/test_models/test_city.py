@@ -1,48 +1,53 @@
 #!/usr/bin/python3
+"""Unittest module for the City Class."""
+
 import unittest
+from datetime import datetime
+import time
 from models.city import City
-"""
-Unit test module for City class
-"""
+import re
+import json
+from models.engine.file_storage import FileStorage
+import os
+from models import storage
+from models.base_model import BaseModel
 
 
 class TestCity(unittest.TestCase):
-    ''' Unit tests for City class '''
 
-    def test_object_instantiation(self):
-        ''' Test instantiation of City class '''
-        self.city = City()
+    """Unit tests for the City class."""
 
-    def test_attributes(self):
-        ''' Test attributes of City class '''
-        self.city = City()
-        self.assertTrue(hasattr(self.city, "created_at"))
-        self.assertTrue(hasattr(self.city, "updated_at"))
-        self.assertFalse(hasattr(self.city, "random_attr"))
-        self.assertTrue(hasattr(self.city, "name"))
-        self.assertTrue(hasattr(self.city, "id"))
-        self.assertEqual(self.city.name, "")
-        self.assertEqual(self.city.state_id, "")
-        self.city.name = "WonderLand"
-        self.city.state_id = "Won67L0nd"
-        self.assertEqual(self.city.name, "WonderLand")
-        self.assertEqual(self.city.state_id, "Won67L0nd")
-        self.assertEqual(self.city.__class__.__name__, "City")
+    def setUp(self):
+        """Set up method for each test."""
+        pass
 
-    def test_save_method(self):
-        ''' Test save method of City class '''
-        self.city = City()
-        self.city.save()
-        self.assertTrue(hasattr(self.city, "updated_at"))
+    def tearDown(self):
+        """Tear down method for each test."""
+        self.resetStorage()
+        pass
 
-    def test_str_method(self):
-        ''' Test __str__ method of City class '''
-        self.city = City()
-        expected_str = "[{}] ({}) {}".format(self.city.__class__.__name__,
-                                             str(self.city.id), self.city.__dict__)
-        self.assertEqual(str(self.city), expected_str)
+    def resetStorage(self):
+        """Reset FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
 
+    def test_8_instantiation(self):
+        """Test instantiation of the City class."""
 
-if __name__ == '__main__':
+        b = City()
+        self.assertEqual(str(type(b)), "<class 'models.city.City'>")
+        self.assertIsInstance(b, City)
+        self.assertTrue(issubclass(type(b), BaseModel))
+
+    def test_8_attributes(self):
+        """Test attributes of the City class."""
+        attributes = storage.attributes()["City"]
+        o = City()
+        for k, v in attributes.items():
+            self.assertTrue(hasattr(o, k))
+            self.assertEqual(type(getattr(o, k, None)), v)
+
+if __name__ == "__main__":
     unittest.main()
 

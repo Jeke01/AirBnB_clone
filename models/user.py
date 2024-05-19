@@ -1,14 +1,10 @@
 #!/usr/bin/python3
-"""this is our code for the user class
-"""
-
+"""di Module for User class."""
 from models.base_model import BaseModel
-import json
 
 
 class User(BaseModel):
-    '''Dis is fr the base model class'''
-
+    """Dis Class representing a User."""
     email = ""
     password = ""
     first_name = ""

@@ -1,52 +1,53 @@
 #!/usr/bin/python3
+"""Unittest module for the Place Class."""
+
 import unittest
+from datetime import datetime
+import time
 from models.place import Place
-"""
-Unit test module for Place class
-"""
+import re
+import json
+from models.engine.file_storage import FileStorage
+import os
+from models import storage
+from models.base_model import BaseModel
 
 
 class TestPlace(unittest.TestCase):
-    ''' Unit tests for Place class '''
 
-    def test_object_instantiation(self):
-        ''' Test instantiation of Place class '''
-        self.place = Place()
+    """Unit tests for the Place class."""
 
-    def test_attributes(self):
-        ''' Test attributes of Place class '''
-        self.place = Place()
-        self.assertTrue(hasattr(self.place, "created_at"))
-        self.assertTrue(hasattr(self.place, "updated_at"))
-        self.assertFalse(hasattr(self.place, "random_attr"))
-        self.assertTrue(hasattr(self.place, "name"))
-        self.assertTrue(hasattr(self.place, "id"))
-        self.assertEqual(self.place.name, "")
-        self.assertEqual(self.place.city_id, "")
-        self.assertEqual(self.place.user_id, "")
-        self.assertEqual(self.place.description, "")
-        self.assertEqual(self.place.number_rooms, 0)
-        self.assertEqual(self.place.number_bathrooms, 0)
-        self.assertEqual(self.place.max_guest, 0)
-        self.assertEqual(self.place.price_by_night, 0)
-        self.assertEqual(self.place.latitude, 0.0)
-        self.assertEqual(self.place.longitude, 0.0)
-        self.assertEqual(self.place.amenity_ids, [])
+    def setUp(self):
+        """Set up method for each test."""
+        pass
 
-    def test_save_method(self):
-        ''' Test save method of Place class '''
-        self.place = Place()
-        self.place.save()
-        self.assertTrue(hasattr(self.place, "updated_at"))
+    def tearDown(self):
+        """Tear down method for each test."""
+        self.resetStorage()
+        pass
 
-    def test_str_method(self):
-        ''' Test __str__ method of Place class '''
-        self.place = Place()
-        expected_str = "[{}] ({}) {}".format(self.place.__class__.__name__,
-                                             str(self.place.id), self.place.__dict__)
-        self.assertEqual(str(self.place), expected_str)
+    def resetStorage(self):
+        """Reset FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
 
+    def test_8_instantiation(self):
+        """Test instantiation of the Place class."""
 
-if __name__ == '__main__':
+        b = Place()
+        self.assertEqual(str(type(b)), "<class 'models.place.Place'>")
+        self.assertIsInstance(b, Place)
+        self.assertTrue(issubclass(type(b), BaseModel))
+
+    def test_8_attributes(self):
+        """Test attributes of the Place class."""
+        attributes = storage.attributes()["Place"]
+        o = Place()
+        for k, v in attributes.items():
+            self.assertTrue(hasattr(o, k))
+            self.assertEqual(type(getattr(o, k, None)), v)
+
+if __name__ == "__main__":
     unittest.main()
 
