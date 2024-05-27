@@ -1,7 +1,9 @@
-body{
-    margin: 0;
-    padding: 1;
+/*
+* global styles
+*/
+
+/* body styles */
+body {
     color: #484848;
-    font-size: 15px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 14px Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }

@@ -1,12 +1,14 @@
-body{
-    margin: 0;
-    padding: 1;
+/*
+ * === Global style ===
+*/
+
+/* Body style */
+body {
     color: #484848;
-    font-size: 15px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font: 14px Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-div.container{
-    max-width: 900px;
-    margin: 40px auto;
-    text-align: center;
+
+/* Strong style */
+strong {
+    font-weight: bold;
 }
